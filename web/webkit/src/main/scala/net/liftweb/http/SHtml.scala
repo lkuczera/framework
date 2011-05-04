@@ -293,7 +293,7 @@ trait SHtml {
 
       private def fixElem(e: Elem): Elem = {
         e.attribute("id") match {
-          case Some(id) => latestId = id.text ; e
+          case Some(id) => latestId = NodeSeq.fromSeq(id).text ; e
           case None => e % ("id" -> latestId)
         }
       }
@@ -1000,10 +1000,10 @@ trait SHtml {
   }
 
   private def isRadio(in: MetaData): Boolean = 
-    in.get("type").map(_.text equalsIgnoreCase "radio") getOrElse false
+    in.get("type").map(NodeSeq.fromSeq(_).text equalsIgnoreCase "radio") getOrElse false
 
   private def isCheckbox(in: MetaData): Boolean = 
-    in.get("type").map(_.text equalsIgnoreCase "checkbox") getOrElse false
+    in.get("type").map(NodeSeq.fromSeq(_).text equalsIgnoreCase "checkbox") getOrElse false
 
 
   /**
@@ -1027,7 +1027,7 @@ trait SHtml {
             val oldAttr: Map[String, String] =
               Map(allEvent.
                   flatMap(a => e.attribute(a).
-                          map(v => a -> (v.text))) :_*)
+                          map(v => a -> (NodeSeq.fromSeq(v).text))) :_*)
 
             val newAttr = e.attributes.filter{
               case up: UnprefixedAttribute => !oldAttr.contains(up.key)
@@ -1089,7 +1089,7 @@ trait SHtml {
             val oldAttr: Map[String, String] =
               Map(allEvent.
                   flatMap(a => e.attribute(a).
-                          map(v => a -> (v.text+"; "))) :_*)
+                          map(v => a -> (NodeSeq.fromSeq(v).text+"; "))) :_*)
 
             val newAttr = e.attributes.filter{
               case up: UnprefixedAttribute => !oldAttr.contains(up.key)
@@ -1519,7 +1519,7 @@ trait SHtml {
   def makeFormsAjax: NodeSeq => NodeSeq = "form" #> ((ns: NodeSeq) => 
     (ns match {
       case e: Elem => {
-        val id: String = e.attribute("id").map(_.text) getOrElse
+        val id: String = e.attribute("id").map(NodeSeq.fromSeq(_).text) getOrElse
         Helpers.nextFuncName
         
         val newMeta = e.attributes.filter{

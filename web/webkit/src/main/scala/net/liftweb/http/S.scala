@@ -46,6 +46,9 @@ class SJBridge {
  * @see LiftFilter
  */
 object S extends S {
+  
+  implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
+
   /**
    * RewriteHolder holds a partial function that re-writes an incoming request. It is
    * used for per-session rewrites, as opposed to global rewrites, which are handled

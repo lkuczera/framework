@@ -28,6 +28,7 @@ import java.io.InputStream
  * Contains functions for obtaining templates
  */
 object TemplateFinder {
+  implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
   private val suffixes = List("html", "xhtml", "htm")
 
   private def checkForLiftView(part: List[String], last: String, what: LiftRules.ViewDispatchPF): Box[NodeSeq] = {
@@ -255,10 +256,9 @@ class StateInStatelessException(msg: String) extends SnippetFailureException(msg
   def snippetFailure: LiftRules.SnippetFailures.Value = 
     LiftRules.SnippetFailures.StateInStateless
 }
-
-
   // an object that extracts an elem that defines a snippet
   private object SnippetNode {
+    implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
     private def removeLift(str: String): String =
       str.indexOf(":") match {
         case x if x >= 0 => str.substring(x + 1)

@@ -41,6 +41,7 @@ import Helpers._
  * <p>More detailed usage of each method is provided below</p>
  */
 object Menu extends DispatchSnippet {
+  implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
   def dispatch: DispatchIt = {
     case "builder" => builder
     case "title" => title

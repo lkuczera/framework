@@ -27,7 +27,7 @@ import Helpers._
 
 private[http] trait LiftMerge {
   self: LiftSession =>
-
+  implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
   /**
    * Manages the merge phase of the rendering pipeline
    */

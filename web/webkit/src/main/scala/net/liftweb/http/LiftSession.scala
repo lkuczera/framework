@@ -38,7 +38,7 @@ import provider._
 
 
 object LiftSession {
-
+implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
   /**
    * Returns a reference to a LiftSession dictated by LiftRules#sessionCreator function.
    */

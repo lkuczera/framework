@@ -25,6 +25,7 @@ import net.liftweb.common._
 import net.liftweb.util._
 import scala.xml.{Node, SpecialNode, Text}
 
+
 object JsCommands {
   def create = new JsCommands(Nil)
 
@@ -630,7 +631,7 @@ trait HtmlFixer {
   private object FindScript {
     def unapply(in: NodeSeq): Option[Elem] = in match {
       case e: Elem => {
-        e.attribute("type").map(_.text).filter(_ == "text/javascript").flatMap {
+        e.attribute("type").map(NodeSeq.fromSeq(_).text).filter(_ == "text/javascript").flatMap {
           a =>
             if (e.attribute("src").isEmpty) Some(e) else None
         }

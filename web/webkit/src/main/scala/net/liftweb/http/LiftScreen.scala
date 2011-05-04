@@ -33,7 +33,7 @@ import JsCmds._
  */
 trait AbstractScreen extends Factory {
   override def toString = screenName
-
+  implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
   protected type Errors = List[FieldError]
 
   @volatile private[this] var _fieldList: List[() => FieldContainer] = Nil
@@ -821,7 +821,7 @@ trait ScreenWizardRendered {
           fe => {
             val f = Helpers.deepEnsureUniqueId(fe)
             val id = Helpers.findBox(f)(_.attribute("id").
-                                        map(_.text).
+                                        map(NodeSeq.fromSeq(_).text).
                                         filter(_ == curId))
             if (id.isEmpty) {
               Helpers.ensureId(f, curId)

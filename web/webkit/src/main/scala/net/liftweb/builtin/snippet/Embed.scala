@@ -33,11 +33,11 @@ import Box._
  */
 object Embed extends DispatchSnippet {
   private lazy val logger = Logger(this.getClass)
-
+  
   def dispatch : DispatchIt = {
     case _ => render _
   }
-
+  implicit def fromseqnode2nodeseq(xs: Seq[Node]) = NodeSeq.fromSeq(xs)
   def render(kids: NodeSeq) : NodeSeq =
   (for {
       ctx <- S.session ?~ ("FIX"+"ME: session is invalid")
